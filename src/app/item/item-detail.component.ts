@@ -6,7 +6,8 @@ import { ItemService } from './item.service';
 
 @Component({
   selector: 'ns-details',
-  templateUrl: './item-detail.component.html',
+  moduleId: module.id,
+  templateUrl: './item-detail.component.html'
 })
 export class ItemDetailComponent implements OnInit {
   item: Item;
@@ -19,8 +20,5 @@ export class ItemDetailComponent implements OnInit {
   ngOnInit(): void {
     const id = +this.route.snapshot.params.id;
     this.item = this.itemService.getItem(id);
-
-    // log the item to the console
-    console.log(this.item);
   }
 }

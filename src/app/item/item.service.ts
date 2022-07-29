@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core'
+import { Injectable } from '@angular/core';
 
-import { Item } from './item'
+import { Item } from './item';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class ItemService {
   private items = new Array<Item>(
@@ -29,13 +29,13 @@ export class ItemService {
     { id: 23, name: 'Umtiti', role: 'Defender' },
     { id: 24, name: 'Mathieu', role: 'Defender' },
     { id: 25, name: 'Masip', role: 'Goalkeeper' }
-  )
+  );
 
   getItems(): Array<Item> {
-    return this.items
+    return this.items;
   }
 
   getItem(id: number): Item {
-    return this.items.filter((item) => item.id === id)[0]
+    return this.items.filter(item => item.id === id)[0];
   }
 }

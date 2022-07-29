@@ -1,14 +1,35 @@
-import { Component, Inject, OnDestroy, OnInit, Optional, ViewContainerRef } from '@angular/core';
-import {  NativeDialogRef, NativeDialogService } from '@nativescript/angular';
+import { Component, Inject, OnDestroy, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute, ActivationStart } from '@angular/router';
+import { NativeDialogRef, NativeDialogService, NATIVE_DIALOG_DATA, PageRouterOutlet, RouterExtensions } from '@nativescript/angular';
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'ns-modal',
   templateUrl: `./modal.component.html`,
 })
 export class ModalComponent implements OnInit, OnDestroy {
   id = Math.floor(Math.random() * 1000);
+  @ViewChild(PageRouterOutlet, { static: false }) outlet?: PageRouterOutlet;
 
-  constructor(@Optional() private ref: NativeDialogRef<ModalComponent>, private nativeDialog: NativeDialogService,  private vcRef: ViewContainerRef) {}
+  constructor(@Optional() private ref: NativeDialogRef<ModalComponent>,
+    private nativeDialog: NativeDialogService,
+    protected activeRoute: ActivatedRoute,
+    protected routerExtensions: RouterExtensions,
+    @Inject(NATIVE_DIALOG_DATA) public data: any,
+    private vcRef: ViewContainerRef) {
+
+    console.log('MODAL CONSTRUCT');
+    // this.subscriptions.push(
+    // this.routerExtensions.router.events.subscribe(e => {
+    //   if (e instanceof ActivationStart && e.snapshot.outlet === 'modal') {
+    //     console.log('modal root deactivate on nav start');
+    //     this.outlet?.deactivate();
+    //   }
+
+    // });
+    // );
+
+  }
 
   openNewModal() {
     this.nativeDialog.open(ModalComponent);
@@ -17,10 +38,21 @@ export class ModalComponent implements OnInit, OnDestroy {
     // });
   }
   ngOnInit() {
-    console.log('modal init');
+    console.log('MODAL INIT');
+    console.log(this.data);
+    this.routerExtensions.navigate([{ outlets: { modal: [this.data.url] } }], {
+      relativeTo: this.activeRoute,
+      // state: this.context.state
+    });
   }
 
   ngOnDestroy() {
     console.log('modal destroy');
+    // this.outlet?.deactivate();
+    // this.outlet?.detach();
+  }
+
+  onActivate(componentReference: any) {
+    console.log('activated');
   }
 }

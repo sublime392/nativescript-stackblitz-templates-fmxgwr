@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Item } from './item';
-import { ItemService } from './item.service';
+import { Item } from '../item/item';
+import { ItemService } from '../item/item.service';
 import { ModalComponent } from '../modal/modal.component';
-import { ModalDialogService, NativeDialogService } from '@nativescript/angular';
+import { NativeDialogConfig, NativeDialogService } from '@nativescript/angular';
 
 @Component({
   selector: 'ns-items',
@@ -15,7 +15,7 @@ export class ItemsComponent implements OnInit {
   message = 'Hello Angular 13!';
   items: Array<Item>;
 
-  constructor(private itemService: ItemService, private nativeDialog: NativeDialogService, private modalDialog: ModalDialogService, private http: HttpClient) {}
+  constructor(private itemService: ItemService, private nativeDialog: NativeDialogService, private http: HttpClient) { }
 
   ngOnInit(): void {
     console.log('ItemsComponent ngOnInit');
@@ -28,7 +28,18 @@ export class ItemsComponent implements OnInit {
   }
 
   openModal() {
-    const ref = this.nativeDialog.open(ModalComponent);
+    const context = {
+      id: 'contactus',
+      url: 'itemsm',
+      state: { hello: 'world' },
+    };
+    const options: NativeDialogConfig = {
+      // viewContainerRef: this._vcRef,
+      data: context,
+      id: context.id
+    };
+    console.log('ddddd');
+    const ref = this.nativeDialog.open(ModalComponent, options);
     ref.afterOpened().subscribe(() => console.log('after openend'));
     ref.beforeClosed().subscribe((result) => console.log('beforeClosed', result));
     ref.afterClosed().subscribe((result) => console.log('afterClosed', result));
@@ -42,6 +53,6 @@ export class ItemsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log('ItemsComponent ngOnDestroy');
+    console.log('Items3Component ngOnDestroy');
   }
 }
