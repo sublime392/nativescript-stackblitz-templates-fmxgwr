@@ -1,7 +1,13 @@
 <ActionBar title="My App"> </ActionBar>
 
-<GridLayout>
-  <ListView [items]="items">
+<GridLayout rows="auto,,*" class="page">
+<StackLayout row="0" padding="10">
+<Label [text]="message" class="h1 text-center c-light-blue"></Label>
+<Label [text]="'NativeScript loves you.'" class="h2 text-center c-light-blue" marginTop="20" marginBottom="5"></Label>
+<Image src="https://angular.io/assets/images/logos/angular/angular.png" horizontalAlignment="center" width="120" verticalAlignment="top"></Image>
+<Button (tap)="openModal()" text="Open Modal" class="-btn -primary"></Button>
+</StackLayout>
+  <ListView row="1" [items]="items">
     <ng-template let-item="item">
       <StackLayout [nsRouterLink]="['/item', item.id]">
         <Label [text]="item.name"></Label>
