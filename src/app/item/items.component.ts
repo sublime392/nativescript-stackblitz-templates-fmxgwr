@@ -11,7 +11,8 @@ import { ItemService } from './item.service'
 })
 export class ItemsComponent implements OnInit {
   items: Array<Item>
-
+  message = 'Hello Angular 13!';
+  
   constructor(private itemService: ItemService, private nativeDialog: NativeDialogService) {}
 
   ngOnInit(): void {
