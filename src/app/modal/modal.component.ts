@@ -1,4 +1,12 @@
-import { Component, Inject, OnDestroy, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnDestroy,
+  OnInit,
+  Optional,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { ActivatedRoute, ActivationStart } from '@angular/router';
 import { NativeDialogRef, NativeDialogService, NATIVE_DIALOG_DATA, PageRouterOutlet, RouterExtensions } from '@nativescript/angular';
 import { take } from 'rxjs/operators';
@@ -12,13 +20,14 @@ export class ModalComponent implements OnInit, OnDestroy {
   id = Math.floor(Math.random() * 1000);
   @ViewChild(PageRouterOutlet, { static: false }) outlet?: PageRouterOutlet;
 
-  constructor(@Optional() private ref: NativeDialogRef<ModalComponent>,
+  constructor(
+    @Optional() private ref: NativeDialogRef<ModalComponent>,
     private nativeDialog: NativeDialogService,
     protected activeRoute: ActivatedRoute,
     protected routerExtensions: RouterExtensions,
     @Inject(NATIVE_DIALOG_DATA) public data: any,
-    private vcRef: ViewContainerRef) {
-
+    private vcRef: ViewContainerRef
+  ) {
     console.log('MODAL CONSTRUCT');
     // this.subscriptions.push(
     // this.routerExtensions.router.events.subscribe(e => {
@@ -29,7 +38,6 @@ export class ModalComponent implements OnInit, OnDestroy {
 
     // });
     // );
-
   }
 
   openNewModal() {
@@ -49,6 +57,9 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     console.log('modal destroy');
+    // this.routerExtensions.navigate([{ outlets: { modal: null } }], {
+    //   // replaceUrl: true,
+    // });
     // this.outlet?.deactivate();
     // this.outlet?.detach();
   }
