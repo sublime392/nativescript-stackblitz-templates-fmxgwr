@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Item } from './item';
@@ -15,7 +15,13 @@ export class ItemsComponent implements OnInit {
   message = 'Hello Angular 13!';
   items: Array<Item>;
 
-  constructor(private itemService: ItemService, private nativeDialog: NativeDialogService, private modalDialog: ModalDialogService, private http: HttpClient) {}
+  @Output() response: EventEmitter<any> = new EventEmitter<any>();
+
+  constructor(private itemService: ItemService, private nativeDialog: NativeDialogService, private modalDialog: ModalDialogService, private http: HttpClient) { }
+
+  responseEmitter(): EventEmitter<any> {
+    return this.response;
+  }
 
   ngOnInit(): void {
     console.log('ItemsComponent ngOnInit');
@@ -27,6 +33,10 @@ export class ItemsComponent implements OnInit {
     // }, 1000);
   }
 
+  closeModal() {
+    this.response.emit('modal response data');
+  }
+
   openModal() {
     const ref = this.nativeDialog.open(ModalComponent);
     ref.afterOpened().subscribe(() => console.log('after openend'));
@@ -34,6 +44,7 @@ export class ItemsComponent implements OnInit {
     ref.afterClosed().subscribe((result) => console.log('afterClosed', result));
     // setTimeout(() => ref.close('result!'), 1000);
   }
+
 
   fetchTodos() {
     this.http.get(`https://jsonplaceholder.typicode.com/todos/1`).subscribe((res) => {

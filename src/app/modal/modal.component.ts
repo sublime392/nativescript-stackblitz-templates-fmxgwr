@@ -1,6 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ActivationStart } from '@angular/router';
 import { NativeDialogRef, NativeDialogService, NATIVE_DIALOG_DATA, PageRouterOutlet, RouterExtensions } from '@nativescript/angular';
+import { take } from 'rxjs/operators';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -54,5 +55,16 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   onActivate(componentReference: any) {
     console.log('activated');
+    componentReference.responseEmitter().pipe(take(1)).subscribe((data: any) => {
+      console.log('response emitted:');
+      console.log(data);
+      // timer(1).subscribe(val => {
+      console.log('modal root close callback emitting');
+      // this.outlet?.deactivate();
+      this.ref.close(data);
+      // this.params.closeCallback(data, this.context.url);
+      // });
+
+    });
   }
 }

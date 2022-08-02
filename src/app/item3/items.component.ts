@@ -40,8 +40,8 @@ export class ItemsComponent implements OnInit {
     };
     console.log('ddddd');
     const ref = this.nativeDialog.open(ModalComponent, options);
-    ref.afterOpened().subscribe(() => console.log('after openend'));
-    ref.beforeClosed().subscribe((result) => console.log('beforeClosed', result));
+    // ref.afterOpened().subscribe(() => console.log('after openend'));
+    // ref.beforeClosed().subscribe((result) => console.log('beforeClosed', result));
     ref.afterClosed().subscribe((result) => console.log('afterClosed', result));
     // setTimeout(() => ref.close('result!'), 1000);
   }
