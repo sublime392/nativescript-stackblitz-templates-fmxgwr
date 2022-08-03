@@ -61,7 +61,10 @@ export class ModalComponent implements OnInit, OnDestroy {
       // timer(1).subscribe(val => {
       console.log('modal root close callback emitting');
       // this.outlet?.deactivate();
-      this.ref.close(data);
+      this.routerExtensions.navigate([{ outlets: { modal: null } }]).then(() => {
+        this.ref.close(data);
+      });
+      // this.ref.close(data);
       // this.params.closeCallback(data, this.context.url);
       // });
 
